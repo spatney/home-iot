@@ -1,12 +1,35 @@
+let express = require('express');
+let app = express();
+let server = require('http').createServer(app);
+let bodyParser = require('body-parser');
+let cors = require('cors');
+
 let Light = require('./lib/light');
+let Garage = require('./lib/garage');
+
+let port = 3000;
 let light = new Light();
+let garage = new Garage();
 
+app.use(cors());
+app.use(bodyParser.json());
 
-setTimeout(() => {
+app.get('/light', (req, res) => {
+
     light.on();
     setTimeout(() => {
         light.off();
     }, 2000);
-}, 3000);
 
-console.log('waiting 3 seconds');
+    res.json({ done: true });
+});
+
+app.get('/garage', (req, res)=>{
+    garage.click();
+
+   res.json({ done: true }); 
+});
+
+server.listen(port, () => {
+    console.log('server alive');
+});
