@@ -14,20 +14,17 @@ let garage = new Garage();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/light', (req, res) => {
+app.post('/light', (req, res) => {
+    let action = req.body.on;
+    action ? light.on() : light.off();
 
-    light.on();
-    setTimeout(() => {
-        light.off();
-    }, 2000);
-
-    res.json({ done: true });
+    res.json({ light: action });
 });
 
-app.get('/garage', (req, res)=>{
+app.post('/garage', (req, res) => {
     garage.click();
 
-   res.json({ done: true }); 
+    res.json({ clicked: true });
 });
 
 server.listen(port, () => {
