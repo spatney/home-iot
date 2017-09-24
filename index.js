@@ -38,6 +38,11 @@ app.post('/servo', (req, res)=>{
     }else{
         horizontalServo.turn(angle);
     }
+
+    res.json({
+        id: id,
+        angle: angle
+    });
 });
 
 server.listen(port, () => {
