@@ -1,18 +1,18 @@
-let express = require('express');
-let app = express();
-let server = require('http').createServer(app);
-let bodyParser = require('body-parser');
-let cors = require('cors');
+const express = require('express');
+const app = express();
+const server = require('http').createServer(app);
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
-let Light = require('./lib/light');
-let Garage = require('./lib/garage');
-let Servo = require('./lib/servo');
+const Light = require('./lib/light');
+const Garage = require('./lib/garage');
+const Servo = require('./lib/servo');
 
-let port = 3000;
-let light = new Light();
-let garage = new Garage();
-let verticalServo = new Servo(1);
-let horizontalServo = new Servo(0);
+const port = 3000;
+const light = new Light();
+const garage = new Garage();
+const verticalServo = new Servo(1);
+const horizontalServo = new Servo(0);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -30,18 +30,21 @@ app.post('/garage', (req, res) => {
     res.json({ clicked: true });
 });
 
-app.post('/servo', (req, res)=>{
+app.post('/servo', (req, res) => {
     let id = req.body.servoId;
     let angle = req.body.angle;
-    if(id === 1){
-        verticalServo.turn(angle);
-    }else{
-        horizontalServo.turn(angle);
+    let promise;
+    if (id === 1) {
+        promise = verticalServo.turn(angle);
+    } else {
+        promise = horizontalServo.turn(angle);
     }
 
-    res.json({
-        id: id,
-        angle: angle
+    promise.then(() => {
+        res.json({
+            id: id,
+            angle: angle
+        });
     });
 });
 
