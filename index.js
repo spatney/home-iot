@@ -33,19 +33,15 @@ app.post('/garage', (req, res) => {
 app.post('/servo', (req, res) => {
     let id = req.body.servoId;
     let angle = req.body.angle;
-    let promise;
-    if (id === 1) {
-        promise = verticalServo.turn(angle);
-    } else {
-        promise = horizontalServo.turn(angle);
-    }
-
-    promise.then(() => {
-        res.json({
-            id: id,
-            angle: angle
+    
+    new Servo(id)
+        .turn(angle)
+        .then(() => {
+            res.json({
+                id: id,
+                angle: angle
+            });
         });
-    });
 });
 
 server.listen(port, () => {
