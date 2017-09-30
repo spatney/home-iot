@@ -11,21 +11,21 @@ const Servo = require('./lib/servo');
 const port = 3000;
 const light = new Light();
 const garage = new Garage();
-const verticalServo = new Servo(1);
-const horizontalServo = new Servo(0);
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/light', (req, res) => {
     let action = req.body.on;
-    action ? light.on() : light.off();
+
+    light.state(action);
 
     res.json({ light: action });
 });
 
 app.post('/garage', (req, res) => {
-    garage.click();
+    
+    garage.toggle();
 
     res.json({ clicked: true });
 });
@@ -41,9 +41,14 @@ app.post('/servo', (req, res) => {
                 id: id,
                 angle: angle
             });
+        })
+        .catch((e)=>{
+            res.status(500).json({
+                id: id,
+                angle: angle,
+                error: e
+            });
         });
 });
 
-server.listen(port, () => {
-    console.log('server alive');
-});
+server.listen(port, () => console.log('server alive'));
