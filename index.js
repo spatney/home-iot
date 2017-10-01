@@ -2,7 +2,7 @@ const SpiderSocket = require('spider-device');
 const DeviceController = require('./lib/deviceController');
 
 const socket = new SpiderSocket({
-    appId: '123456',
+    appId: 'bcabd300-42f3-462c-934e-e618033cabc6',
     uid: 'home'
 });
 
