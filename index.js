@@ -11,7 +11,7 @@ const deviceController = new DeviceController(socket);
 socket.register(() => {
     console.log('registered');
     socket.on('command', command => {
-        console.log('running command');
+        console.log('running command', command);
         deviceController.execCommand(command);
     });
 });
