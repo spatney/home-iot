@@ -11,8 +11,8 @@
   "dependencies": {
     "adafruit-i2c-pwm-driver": "^0.2.1",
     "nanotimer": "^0.3.15",
-    "public-ip": "^2.3.5",
-    "serialport": "^5.0.0",
-    "spider-device": "^1.0.1"
+    "public-ip": "^3.1.0",
+    "serialport": "^7.1.5",
+    "spider-device": "^1.1.0"
   }
 }
